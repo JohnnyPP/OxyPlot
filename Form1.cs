@@ -20,12 +20,55 @@ namespace WindowsFormsDemo
 {
     public partial class Form1 : Form
     {
-   
-        private int i = 0;
+
+        private readonly LineSeries lineSeries1;
+
+        private int i;
        
         public Form1()
         {
             InitializeComponent();
+
+            var pm = new PlotModel("TMP102 digital temperature sensor", "Temperature data stream") 
+            { 
+                PlotType = PlotType.Cartesian, Background = OxyColors.White 
+            };
+
+            var linearAxisX = new LinearAxis();
+            linearAxisX.Title = "Sample number";
+            linearAxisX.Position = AxisPosition.Bottom;
+            linearAxisX.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
+            linearAxisX.MajorGridlineStyle = LineStyle.Solid;
+            linearAxisX.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
+            linearAxisX.MinorGridlineStyle = LineStyle.Solid;
+            linearAxisX.Maximum = 40;
+            linearAxisX.Minimum = 0;
+            pm.Axes.Add(linearAxisX);
+
+            var linearAxisY = new LinearAxis();
+            linearAxisY.Title = "Temperature [°C]";
+            linearAxisY.Position = AxisPosition.Left;
+            linearAxisY.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
+            linearAxisY.MajorGridlineStyle = LineStyle.Solid;
+            linearAxisY.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
+            linearAxisY.MinorGridlineStyle = LineStyle.Solid;
+            linearAxisY.Maximum = 35;
+            linearAxisY.Minimum = 15;
+            pm.Axes.Add(linearAxisY);
+
+            this.lineSeries1 = new LineSeries();
+            this.lineSeries1.Color = OxyColor.FromArgb(255, 78, 154, 6);
+            this.lineSeries1.MarkerFill = OxyColor.FromArgb(255, 255, 255, 255);
+            this.lineSeries1.MarkerStroke = OxyColors.ForestGreen;
+            this.lineSeries1.MarkerStrokeThickness = 2;
+            this.lineSeries1.MarkerType = MarkerType.Square;
+            this.lineSeries1.MarkerSize = 2;
+            this.lineSeries1.StrokeThickness = 2;
+            this.lineSeries1.DataFieldX = "Date";
+            this.lineSeries1.DataFieldY = "Value";
+            //this.lineSeries1.LabelFormatString = "{1}";         //prints Y value on the plot
+            pm.Series.Add(this.lineSeries1);
+            plot1.Model = pm;
         
         }
 
@@ -54,68 +97,24 @@ namespace WindowsFormsDemo
 
 
         private delegate void LineReceivedEvent(string line);
+
         private void LineReceived(string line)
         {
             double dTemperature, dTemperatureRound;
-
             try
             {
-               
                 dTemperature = double.Parse(line, CultureInfo.InvariantCulture);
                 dTemperatureRound = Math.Round(dTemperature, 4);
-
                 label1.Text = Convert.ToString(dTemperatureRound);
-
-                var pm = new PlotModel("TMP102 digital temperature sensor", "Temperature data stream")
-                {
-                    PlotType = PlotType.Cartesian,
-                    Background = OxyColors.White,
-
-                };
-
-
-                var linearAxisX = new LinearAxis();
-                linearAxisX.Title = "Sample number";
-                linearAxisX.Position = AxisPosition.Bottom;
-                linearAxisX.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
-                linearAxisX.MajorGridlineStyle = LineStyle.Solid;
-                linearAxisX.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
-                linearAxisX.MinorGridlineStyle = LineStyle.Solid;
-                pm.Axes.Add(linearAxisX);
-
-                var linearAxisY = new LinearAxis();
-                linearAxisY.Title = "Temperature [°C]";
-                linearAxisY.Position = AxisPosition.Left;
-                linearAxisY.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
-                linearAxisY.MajorGridlineStyle = LineStyle.Solid;
-                linearAxisY.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
-                linearAxisY.MinorGridlineStyle = LineStyle.Solid;
-                pm.Axes.Add(linearAxisY);
-
-                var lineSeries1 = new LineSeries();
-
-                lineSeries1.Color = OxyColor.FromArgb(255, 78, 154, 6);
-                lineSeries1.MarkerFill = OxyColor.FromArgb(255, 78, 154, 6);
-                lineSeries1.MarkerStroke = OxyColors.ForestGreen;
-                lineSeries1.MarkerType = MarkerType.Circle;
-                lineSeries1.StrokeThickness = 2;
-                lineSeries1.DataFieldX = "Date";
-                lineSeries1.DataFieldY = "Value";
-
-                lineSeries1.Points.Add(new DataPoint(i, dTemperatureRound));
-
-               
-                pm.Series.Add(lineSeries1);
-
-                plot1.Model = pm;
-
-                i++;
+                this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
+                plot1.InvalidatePlot(true);
+                this.i++;
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+            
         }
     }
 }
