@@ -29,7 +29,7 @@ namespace WindowsFormsDemo
         {
             InitializeComponent();
 
-            var pm = new PlotModel("TMP102 digital temperature sensor", "Temperature data stream") 
+            var pm = new PlotModel("TMP102 digital temperature sensor") 
             { 
                 PlotType = PlotType.Cartesian, Background = OxyColors.White 
             };
@@ -105,7 +105,11 @@ namespace WindowsFormsDemo
             {
                 dTemperature = double.Parse(line, CultureInfo.InvariantCulture);
                 dTemperatureRound = Math.Round(dTemperature, 4);
-                label1.Text = Convert.ToString(dTemperatureRound);
+                label1.Text = "Temperature: " + Convert.ToString(dTemperatureRound) + " [°C]" + Environment.NewLine +
+                    "Mean: " + " [°C]" + Environment.NewLine +
+                    "Standard deviation: " + " [°C]" + Environment.NewLine +
+                    "Median: " + " [°C]" + Environment.NewLine +
+                    "Kurtosis";
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
                 plot1.InvalidatePlot(true);
                 this.i++;
