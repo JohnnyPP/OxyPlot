@@ -14,7 +14,8 @@ using System.Text;
 using System;
 using System.Windows.Forms;
 using OxyPlot;
-using System.Globalization;    
+using System.Globalization;
+using MathNet.Numerics.Statistics;   
 
 namespace WindowsFormsDemo
 {
@@ -24,12 +25,14 @@ namespace WindowsFormsDemo
         private readonly LineSeries lineSeries1;
 
         private int i;
+
+        private List<double> listdTemperature = new List<double>();
        
         public Form1()
         {
             InitializeComponent();
 
-            var pm = new PlotModel("TMP102 digital temperature sensor") 
+            var pm = new PlotModel("Texas Instruments TMP102 digital temperature sensor") 
             { 
                 PlotType = PlotType.Cartesian, Background = OxyColors.White 
             };
@@ -105,11 +108,21 @@ namespace WindowsFormsDemo
             {
                 dTemperature = double.Parse(line, CultureInfo.InvariantCulture);
                 dTemperatureRound = Math.Round(dTemperature, 4);
-                label1.Text = "Temperature: " + Convert.ToString(dTemperatureRound) + " [°C]" + Environment.NewLine +
-                    "Mean: " + " [°C]" + Environment.NewLine +
-                    "Standard deviation: " + " [°C]" + Environment.NewLine +
-                    "Median: " + " [°C]" + Environment.NewLine +
-                    "Kurtosis";
+               
+                listdTemperature.Add(dTemperatureRound);
+                DescriptiveStatistics descrStat = new DescriptiveStatistics(listdTemperature);
+                double dKurtosis = descrStat.Kurtosis;
+                double dSkewness = descrStat.Skewness;
+
+                label1.Text = "Temperature: " + Convert.ToString(dTemperatureRound) + " [°C]" + Environment.NewLine + Environment.NewLine +
+                    "Mean: " + Convert.ToString(Math.Round(listdTemperature.Mean(),4)) + " [°C]" + Environment.NewLine +
+                    "Median: " + Convert.ToString(Math.Round(listdTemperature.Median(), 4)) + " [°C]" + Environment.NewLine +
+                    "Standard deviation: " + Convert.ToString(Math.Round(listdTemperature.StandardDeviation(), 4)) + " [°C]" + Environment.NewLine +
+                    "3x Standard deviation: " + Convert.ToString(3*Math.Round(listdTemperature.StandardDeviation(), 4)) + " [°C]" + Environment.NewLine +
+                    "Max: " + Convert.ToString(Math.Round(listdTemperature.Max(), 4)) + " [°C]" + Environment.NewLine +
+                    "Min: " + Convert.ToString(Math.Round(listdTemperature.Min(), 4)) + " [°C]" + Environment.NewLine +
+                    "Kurtosis:" + Convert.ToString(Math.Round(descrStat.Kurtosis, 4)) + "\r\n" +
+                    "Skewness:" + Convert.ToString(Math.Round(descrStat.Skewness, 4));
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
                 plot1.InvalidatePlot(true);
                 this.i++;
