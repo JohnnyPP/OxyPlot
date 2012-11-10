@@ -15,7 +15,8 @@ using System;
 using System.Windows.Forms;
 using OxyPlot;
 using System.Globalization;
-using MathNet.Numerics.Statistics;   
+using MathNet.Numerics.Statistics;
+using System.IO;
 
 namespace WindowsFormsDemo
 {
@@ -125,7 +126,25 @@ namespace WindowsFormsDemo
                     "Skewness:" + Convert.ToString(Math.Round(descrStat.Skewness, 4));
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
                 plot1.InvalidatePlot(true);
+
+
+                if (checkBox1Save.Checked)
+                {
+                    TextWriter file = new StreamWriter("c:\\TemperatureLogger.txt", true);
+                    // write a line of text to the file
+                    file.WriteLine(DateTime.Now + " Sample: " + Convert.ToString(i) +
+                    " Temperature: " + Convert.ToString(dTemperatureRound) + " [C]" +
+                    " Mean: " + Convert.ToString(Math.Round(listdTemperature.Mean(), 4)) + " [C]" +
+                    " Standard deviation: " + Convert.ToString(Math.Round(listdTemperature.StandardDeviation(), 4)) + " [C]");
+                    // close the stream
+                    file.Close();
+                }
+                
+                
                 this.i++;
+
+
+
             }
             catch (Exception ex)
             {

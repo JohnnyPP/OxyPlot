@@ -42,6 +42,7 @@ namespace WindowsFormsDemo
             this.label1 = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.button2_Disconnect = new System.Windows.Forms.Button();
+            this.checkBox1Save = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // plot1
@@ -91,12 +92,23 @@ namespace WindowsFormsDemo
             this.button2_Disconnect.UseVisualStyleBackColor = true;
             this.button2_Disconnect.Click += new System.EventHandler(this.button2_Disconnect_Click);
             // 
+            // checkBox1Save
+            // 
+            this.checkBox1Save.AutoSize = true;
+            this.checkBox1Save.Location = new System.Drawing.Point(15, 385);
+            this.checkBox1Save.Name = "checkBox1Save";
+            this.checkBox1Save.Size = new System.Drawing.Size(103, 17);
+            this.checkBox1Save.TabIndex = 4;
+            this.checkBox1Save.Text = "Save data to file";
+            this.checkBox1Save.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1036, 486);
+            this.Controls.Add(this.checkBox1Save);
             this.Controls.Add(this.button2_Disconnect);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1_Connect);
@@ -115,5 +127,6 @@ namespace WindowsFormsDemo
         private System.Windows.Forms.Label label1;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button button2_Disconnect;
+        private System.Windows.Forms.CheckBox checkBox1Save;
     }
 }
