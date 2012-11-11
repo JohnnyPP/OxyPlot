@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+ï»¿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Form1.cs" company="OxyPlot">
 //   http://oxyplot.codeplex.com, license: Ms-PL
 // </copyright>
@@ -50,7 +50,7 @@ namespace WindowsFormsDemo
             pm.Axes.Add(linearAxisX);
 
             var linearAxisY = new LinearAxis();
-            linearAxisY.Title = "Temperature [°C]";
+            linearAxisY.Title = "Temperature [Â°C]";
             linearAxisY.Position = AxisPosition.Left;
             linearAxisY.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
             linearAxisY.MajorGridlineStyle = LineStyle.Solid;
@@ -75,6 +75,8 @@ namespace WindowsFormsDemo
             plot1.Model = pm;
         
         }
+
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -104,7 +106,7 @@ namespace WindowsFormsDemo
 
         private void LineReceived(string line)
         {
-            double dTemperature, dTemperatureRound;
+            double dTemperature, dTemperatureRound, dTemperatureMean;
             try
             {
                 dTemperature = double.Parse(line, CultureInfo.InvariantCulture);
@@ -114,16 +116,37 @@ namespace WindowsFormsDemo
                 DescriptiveStatistics descrStat = new DescriptiveStatistics(listdTemperature);
                 double dKurtosis = descrStat.Kurtosis;
                 double dSkewness = descrStat.Skewness;
+                dTemperatureMean = Math.Round(listdTemperature.Mean(), 4);
 
-                label1.Text = "Temperature: " + Convert.ToString(dTemperatureRound) + " [°C]" + Environment.NewLine + Environment.NewLine +
-                    "Mean: " + Convert.ToString(Math.Round(listdTemperature.Mean(),4)) + " [°C]" + Environment.NewLine +
-                    "Median: " + Convert.ToString(Math.Round(listdTemperature.Median(), 4)) + " [°C]" + Environment.NewLine +
-                    "Standard deviation: " + Convert.ToString(Math.Round(listdTemperature.StandardDeviation(), 4)) + " [°C]" + Environment.NewLine +
-                    "3x Standard deviation: " + Convert.ToString(3*Math.Round(listdTemperature.StandardDeviation(), 4)) + " [°C]" + Environment.NewLine +
-                    "Max: " + Convert.ToString(Math.Round(listdTemperature.Max(), 4)) + " [°C]" + Environment.NewLine +
-                    "Min: " + Convert.ToString(Math.Round(listdTemperature.Min(), 4)) + " [°C]" + Environment.NewLine +
-                    "Kurtosis:" + Convert.ToString(Math.Round(descrStat.Kurtosis, 4)) + "\r\n" +
-                    "Skewness:" + Convert.ToString(Math.Round(descrStat.Skewness, 4));
+
+                if (dTemperatureRound == dTemperatureMean)
+                {
+                    label1Temperature.Text = "Temperature: " + String.Format("{0:0.0000}", dTemperature) + " [Â°C] â–¸";
+                }
+
+                if (dTemperatureRound < dTemperatureMean)
+                {
+                    label1Temperature.Text = "Temperature: " + String.Format("{0:0.0000}", dTemperature) + " [Â°C] â–¾";
+                }
+
+                if (dTemperatureRound > dTemperatureMean)
+                {
+                    label1Temperature.Text = "Temperature: " + String.Format("{0:0.0000}", dTemperature) + " [Â°C] â–´";
+                }
+
+
+                label2TempStats.Text =
+                    "Mean: " + String.Format("{0:0.0000}", dTemperatureMean) + " [Â°C]" + Environment.NewLine +
+                    "Median: " + String.Format("{0:0.0000}", listdTemperature.Median()) + " [Â°C]" + Environment.NewLine +
+                    "Standard deviation: " + String.Format("{0:0.0000}", listdTemperature.StandardDeviation()) + " [Â°C]" + Environment.NewLine +
+                    "3x Standard deviation: " + String.Format("{0:0.0000}", 3*listdTemperature.StandardDeviation()) + " [Â°C]" + Environment.NewLine +
+                    "Max: " + String.Format("{0:0.0000}", listdTemperature.Max()) + " [Â°C]" + Environment.NewLine +
+                    "Min: " + String.Format("{0:0.0000}", listdTemperature.Min()) + " [Â°C]" + Environment.NewLine +
+                    "Kurtosis: " + String.Format("{0:0.0000}", descrStat.Kurtosis) + "\r\n" +
+                    "Skewness: " + String.Format("{0:0.0000}", descrStat.Skewness) + "\r\n" +
+                    "Sample number: " + Convert.ToString(i);
+
+                
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
                 plot1.InvalidatePlot(true);
 
@@ -133,12 +156,13 @@ namespace WindowsFormsDemo
                     TextWriter file = new StreamWriter("c:\\TemperatureLogger.txt", true);
                     // write a line of text to the file
                     file.WriteLine(DateTime.Now + " Sample: " + Convert.ToString(i) +
-                    " Temperature: " + Convert.ToString(dTemperatureRound) + " [C]" +
-                    " Mean: " + Convert.ToString(Math.Round(listdTemperature.Mean(), 4)) + " [C]" +
-                    " Standard deviation: " + Convert.ToString(Math.Round(listdTemperature.StandardDeviation(), 4)) + " [C]");
+                    " Temperature: " + String.Format("{0:0.0000}", dTemperature) + " [C]" +
+                    " Mean: " + String.Format("{0:0.0000}", dTemperatureMean) + " [C]" +
+                    " Standard deviation: " + String.Format("{0:0.0000}", listdTemperature.StandardDeviation()) + " [C]");
                     // close the stream
                     file.Close();
                 }
+                
                 
                 
                 this.i++;
@@ -149,6 +173,16 @@ namespace WindowsFormsDemo
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+
+            
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.Close();
             }
             
         }
