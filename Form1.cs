@@ -33,6 +33,7 @@ namespace WindowsFormsDemo
         {
             InitializeComponent();
             button2_Disconnect.Enabled = false;
+            textBox1Delay.Text = "1000";                            //microcontroller default sampling interval 1000 ms
 
             var pm = new PlotModel("Texas Instruments TMP102 digital temperature sensor") 
             { 
@@ -194,6 +195,21 @@ namespace WindowsFormsDemo
                 serialPort1.Close();
             }
             
+        }
+
+        private void textBox1Delay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    serialPort1.WriteLine(textBox1Delay.Text+"#");
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
         }
     }
 }

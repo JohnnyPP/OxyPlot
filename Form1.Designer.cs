@@ -44,6 +44,9 @@ namespace WindowsFormsDemo
             this.button2_Disconnect = new System.Windows.Forms.Button();
             this.checkBox1Save = new System.Windows.Forms.CheckBox();
             this.label1Temperature = new System.Windows.Forms.Label();
+            this.textBox1Delay = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // plot1
@@ -73,7 +76,7 @@ namespace WindowsFormsDemo
             // label2TempStats
             // 
             this.label2TempStats.AutoSize = true;
-            this.label2TempStats.Location = new System.Drawing.Point(12, 132);
+            this.label2TempStats.Location = new System.Drawing.Point(9, 131);
             this.label2TempStats.Name = "label2TempStats";
             this.label2TempStats.Size = new System.Drawing.Size(110, 13);
             this.label2TempStats.TabIndex = 2;
@@ -96,7 +99,7 @@ namespace WindowsFormsDemo
             // checkBox1Save
             // 
             this.checkBox1Save.AutoSize = true;
-            this.checkBox1Save.Location = new System.Drawing.Point(15, 385);
+            this.checkBox1Save.Location = new System.Drawing.Point(12, 432);
             this.checkBox1Save.Name = "checkBox1Save";
             this.checkBox1Save.Size = new System.Drawing.Size(103, 17);
             this.checkBox1Save.TabIndex = 4;
@@ -107,11 +110,29 @@ namespace WindowsFormsDemo
             // 
             this.label1Temperature.AutoSize = true;
             this.label1Temperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1Temperature.Location = new System.Drawing.Point(15, 95);
+            this.label1Temperature.Location = new System.Drawing.Point(9, 95);
             this.label1Temperature.Name = "label1Temperature";
             this.label1Temperature.Size = new System.Drawing.Size(97, 16);
             this.label1Temperature.TabIndex = 5;
             this.label1Temperature.Text = "Temperature";
+            // 
+            // textBox1Delay
+            // 
+            this.textBox1Delay.Location = new System.Drawing.Point(6, 19);
+            this.textBox1Delay.Name = "textBox1Delay";
+            this.textBox1Delay.Size = new System.Drawing.Size(114, 20);
+            this.textBox1Delay.TabIndex = 6;
+            this.textBox1Delay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1Delay_KeyDown);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBox1Delay);
+            this.groupBox1.Location = new System.Drawing.Point(12, 361);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(126, 50);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Sampling interval [ms]";
             // 
             // Form1
             // 
@@ -119,6 +140,7 @@ namespace WindowsFormsDemo
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1036, 486);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1Temperature);
             this.Controls.Add(this.checkBox1Save);
             this.Controls.Add(this.button2_Disconnect);
@@ -128,6 +150,8 @@ namespace WindowsFormsDemo
             this.Name = "Form1";
             this.Text = "OxyPlot in Windows Forms";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,5 +166,7 @@ namespace WindowsFormsDemo
         private System.Windows.Forms.Button button2_Disconnect;
         private System.Windows.Forms.CheckBox checkBox1Save;
         private System.Windows.Forms.Label label1Temperature;
+        private System.Windows.Forms.TextBox textBox1Delay;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
