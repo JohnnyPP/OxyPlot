@@ -32,6 +32,7 @@ namespace WindowsFormsDemo
         public Form1()
         {
             InitializeComponent();
+            button2_Disconnect.Enabled = false;
 
             var pm = new PlotModel("Texas Instruments TMP102 digital temperature sensor") 
             { 
@@ -76,7 +77,7 @@ namespace WindowsFormsDemo
         
         }
 
-        
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -85,6 +86,12 @@ namespace WindowsFormsDemo
             serialPort1.DtrEnable = true;
             serialPort1.Open();
             serialPort1.DataReceived += serialPort1_DataReceived;
+
+            if (serialPort1.IsOpen)
+            {
+                button1_Connect.Enabled = false;
+                button2_Disconnect.Enabled = true;
+            }
         }
 
         private void button2_Disconnect_Click(object sender, EventArgs e)
@@ -92,6 +99,8 @@ namespace WindowsFormsDemo
             if (serialPort1.IsOpen)
             {
                 serialPort1.Close();
+                button1_Connect.Enabled = true;
+                button2_Disconnect.Enabled = false;
             }
         }
 
