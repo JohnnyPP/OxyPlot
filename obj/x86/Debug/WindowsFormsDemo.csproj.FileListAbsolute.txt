@@ -21,11 +21,8 @@ C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\OxyPlot.pdb
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\OxyPlot.xml
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\OxyPlot.WindowsForms.pdb
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\OxyPlot.WindowsForms.xml
-C:\Programming\C#\OxyPlot\OxyPLot\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Programming\C#\OxyPlot\OxyPLot\obj\x86\Debug\WindowsFormsDemo.Form1.resources
 C:\Programming\C#\OxyPlot\OxyPLot\obj\x86\Debug\WindowsFormsDemo.Properties.Resources.resources
-C:\Programming\C#\OxyPlot\OxyPLot\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\Programming\C#\OxyPlot\OxyPLot\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\MathNet.Numerics.dll
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\MathNet.Numerics.IO.dll
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\zlib.net.dll
@@ -33,3 +30,5 @@ C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\MathNet.Numerics.pdb
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\MathNet.Numerics.xml
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\MathNet.Numerics.IO.pdb
 C:\Programming\C#\OxyPlot\OxyPLot\bin\Debug\MathNet.Numerics.IO.xml
+C:\Programming\C#\OxyPlot\OxyPLot\obj\x86\Debug\WindowsFormsDemo.csprojResolveAssemblyReference.cache
+C:\Programming\C#\OxyPlot\OxyPLot\obj\x86\Debug\WindowsFormsDemo.csproj.GenerateResource.Cache

@@ -35,32 +35,36 @@ namespace WindowsFormsDemo
             button2_Disconnect.Enabled = false;
             textBox1Delay.Text = "1000";                            //microcontroller default sampling interval 1000 ms
 
-            var pm = new PlotModel("Texas Instruments TMP102 digital temperature sensor") 
-            { 
-                PlotType = PlotType.Cartesian, Background = OxyColors.White 
-            };
 
-            var linearAxisX = new LinearAxis();
-            linearAxisX.Title = "Sample number";
-            linearAxisX.Position = AxisPosition.Bottom;
-            linearAxisX.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
-            linearAxisX.MajorGridlineStyle = LineStyle.Solid;
-            linearAxisX.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
-            linearAxisX.MinorGridlineStyle = LineStyle.Solid;
-            linearAxisX.Maximum = 40;
-            linearAxisX.Minimum = 0;
-            pm.Axes.Add(linearAxisX);
 
-            var linearAxisY = new LinearAxis();
-            linearAxisY.Title = "Temperature [°C]";
-            linearAxisY.Position = AxisPosition.Left;
-            linearAxisY.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
-            linearAxisY.MajorGridlineStyle = LineStyle.Solid;
-            linearAxisY.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
-            linearAxisY.MinorGridlineStyle = LineStyle.Solid;
-            linearAxisY.Maximum = 35;
-            linearAxisY.Minimum = 15;
-            pm.Axes.Add(linearAxisY);
+            PlotVariables.linearAxisX.Title = "Sample number";
+            PlotVariables.linearAxisX.Position = AxisPosition.Bottom;
+            PlotVariables.linearAxisX.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
+            PlotVariables.linearAxisX.MajorGridlineStyle = LineStyle.Solid;
+            PlotVariables.linearAxisX.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
+            PlotVariables.linearAxisX.MinorGridlineStyle = LineStyle.Solid;
+            PlotVariables.linearAxisX.Maximum = 40;
+            PlotVariables.linearAxisX.Minimum = 0;
+            //PlotVariables.linearAxisX.IsZoomEnabled = false;
+            //PlotVariables.linearAxisX.IsPanEnabled = false;
+
+            PlotVariables.pm.Axes.Add(PlotVariables.linearAxisX);
+
+           
+            PlotVariables.linearAxisY.Title = "Temperature [°C]";
+            PlotVariables.linearAxisY.Position = AxisPosition.Left;
+            PlotVariables.linearAxisY.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
+            PlotVariables.linearAxisY.MajorGridlineStyle = LineStyle.Solid;
+            PlotVariables.linearAxisY.MinorGridlineColor = OxyColor.FromArgb(20, 0, 0, 139);
+            PlotVariables.linearAxisY.MinorGridlineStyle = LineStyle.Solid;
+            PlotVariables.linearAxisY.Maximum = 35;
+            PlotVariables.linearAxisY.Minimum = 15;
+            //PlotVariables.linearAxisY.IsZoomEnabled = false;
+            //PlotVariables.linearAxisY.IsPanEnabled = false;
+
+            PlotVariables.pm.Axes.Add(PlotVariables.linearAxisY);
+
+           
 
             this.lineSeries1 = new LineSeries();
             this.lineSeries1.Color = OxyColor.FromArgb(255, 78, 154, 6);
@@ -72,9 +76,8 @@ namespace WindowsFormsDemo
             this.lineSeries1.StrokeThickness = 2;
             this.lineSeries1.DataFieldX = "Date";
             this.lineSeries1.DataFieldY = "Value";
-            //this.lineSeries1.LabelFormatString = "{1}";         //prints Y value on the plot
-            pm.Series.Add(this.lineSeries1);
-            plot1.Model = pm;
+            PlotVariables.pm.Series.Add(this.lineSeries1);
+            plot1.Model = PlotVariables.pm;
         
         }
 
@@ -156,9 +159,16 @@ namespace WindowsFormsDemo
                     "Skewness: " + String.Format("{0:0.0000}", descrStat.Skewness) + "\r\n" +
                     "Sample number: " + Convert.ToString(i);
 
+                PlotVariables.linearAxisX.AbsoluteMaximum = this.i;
+                PlotVariables.linearAxisX.AbsoluteMinimum = -0.1;
+
+                //PlotVariables.linearAxisY.AbsoluteMaximum = listdTemperature.Max()+1;
+                //PlotVariables.linearAxisY.AbsoluteMinimum = listdTemperature.Min()-1;
                 
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
-                plot1.InvalidatePlot(true);
+                plot1.InvalidatePlot(false);
+                //plot1.RefreshPlot(true);
+               
 
 
                 if (checkBox1Save.Checked)
@@ -203,7 +213,7 @@ namespace WindowsFormsDemo
             {
                 try
                 {
-                    serialPort1.WriteLine(textBox1Delay.Text+"#");
+                    serialPort1.WriteLine(textBox1Delay.Text + "#");              //microcontroller reads serial port until '#' comes up and serial data is avaible
                 }
                 catch (System.Exception ex)
                 {
