@@ -36,6 +36,7 @@ namespace WindowsFormsDemo
             checkBox2MedianChart.Checked = true;
             textBox1Delay.Text = "1000";                            //microcontroller default sampling interval 1000 ms
 
+           
 
 
             PlotVariables.linearAxisX.Title = "Sample number";
@@ -50,6 +51,17 @@ namespace WindowsFormsDemo
             //PlotVariables.linearAxisX.IsPanEnabled = false;
 
             PlotVariables.pm.Axes.Add(PlotVariables.linearAxisX);
+
+            PlotVariables.linearAxisXTop.Title = "Time";
+            PlotVariables.linearAxisXTop.Position = AxisPosition.Top;
+            PlotVariables.linearAxisXTop.MajorGridlineColor = OxyColor.FromArgb(40, 255, 0, 139);
+            PlotVariables.linearAxisXTop.MajorGridlineStyle = LineStyle.Solid;
+            PlotVariables.linearAxisXTop.MinorGridlineColor = OxyColor.FromArgb(20, 255, 0, 139);
+            PlotVariables.linearAxisXTop.MinorGridlineStyle = LineStyle.Solid;
+            PlotVariables.linearAxisXTop.Maximum = 40;
+            PlotVariables.linearAxisXTop.Minimum = 0;
+
+            PlotVariables.pm.Axes.Add(PlotVariables.linearAxisXTop);
 
            
             PlotVariables.linearAxisY.Title = "Temperature [°C]";
@@ -203,6 +215,7 @@ namespace WindowsFormsDemo
 
                 //PlotVariables.linearAxisX.AbsoluteMaximum = this.i;
                 PlotVariables.linearAxisX.AbsoluteMinimum = -0.1;
+                PlotVariables.linearAxisXTop.AbsoluteMinimum = -0.1;
                 //PlotVariables.linearAxisX.AxisChanged += xAxisDateTime_AxisChanged;
 
                 PlotVariables.linearAxisY.AbsoluteMaximum = listdTemperature.Max()+0.5;
