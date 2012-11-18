@@ -24,6 +24,7 @@ namespace WindowsFormsDemo
     {
 
         private readonly LineSeries lineSeries1;
+        private readonly LineSeries lineSeries2Mean;
 
         private int i;
 
@@ -71,10 +72,12 @@ namespace WindowsFormsDemo
             PlotVariables.areaSeries1.StrokeThickness = 0;
             PlotVariables.areaSeries1.DataFieldX = "Sample number";
             PlotVariables.areaSeries1.DataFieldY = "3*Standard deviation+Current temperature";
-            PlotVariables.areaSeries1.Title = "± 3*Standard deviation area";
+            PlotVariables.areaSeries1.Title = "± 3*\u03C3 area";                                //http://www.fileformat.info/info/unicode/char/03c3/index.htm
             
             PlotVariables.pm.Series.Add(PlotVariables.areaSeries1);
 
+
+            //temperature
             this.lineSeries1 = new LineSeries();
             this.lineSeries1.Color = OxyColor.FromArgb(255, 78, 154, 6);
             this.lineSeries1.MarkerFill = OxyColor.FromArgb(255, 255, 255, 255);
@@ -83,10 +86,26 @@ namespace WindowsFormsDemo
             this.lineSeries1.MarkerType = MarkerType.Square;
             this.lineSeries1.MarkerSize = 2;
             this.lineSeries1.StrokeThickness = 2;
-            this.lineSeries1.DataFieldX = "Date";
+            this.lineSeries1.DataFieldX = "Sample";
             this.lineSeries1.DataFieldY = "Value";
             this.lineSeries1.Title = "Current temperature";
             PlotVariables.pm.Series.Add(this.lineSeries1);
+
+            //mean
+            this.lineSeries2Mean = new LineSeries();
+            this.lineSeries2Mean.Color = OxyColor.FromArgb(255, 255, 0, 0);
+            this.lineSeries2Mean.MarkerFill = OxyColor.FromArgb(255, 255, 255, 255);
+            this.lineSeries2Mean.MarkerStroke = OxyColors.ForestGreen;
+            this.lineSeries2Mean.MarkerStrokeThickness = 2;
+            this.lineSeries2Mean.MarkerType = MarkerType.None;
+            this.lineSeries2Mean.MarkerSize = 1;
+            this.lineSeries2Mean.StrokeThickness = 1;
+            this.lineSeries2Mean.DataFieldX = "Sample";
+            this.lineSeries2Mean.DataFieldY = "Value";
+            this.lineSeries2Mean.Title = "Mean temperature";
+            PlotVariables.pm.Series.Add(this.lineSeries2Mean);
+            
+
             plot1.Model = PlotVariables.pm;
         
         }
@@ -181,9 +200,9 @@ namespace WindowsFormsDemo
 
                 //PlotVariables.areaSeries1.Points.Add(new DataPoint(this.i, dTemperatureMean + (3 * listdTemperature.StandardDeviation())));
                 //PlotVariables.areaSeries1.Points2.Add(new DataPoint(this.i, dTemperatureMean - (3 * listdTemperature.StandardDeviation())));
-               
-                
-               
+
+
+                this.lineSeries2Mean.Points.Add(new DataPoint(this.i, dTemperatureMean));
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
                 plot1.InvalidatePlot(false);
                 //plot1.RefreshPlot(true);
