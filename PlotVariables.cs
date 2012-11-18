@@ -17,6 +17,8 @@ namespace WindowsFormsDemo
 
         public static LinearAxis linearAxisX = new LinearAxis();
         public static LinearAxis linearAxisY = new LinearAxis();
+        public static AreaSeries areaSeries1 = new AreaSeries();
+
         //public static LineSeries lineSeries1 = new LineSeries();
         
     }

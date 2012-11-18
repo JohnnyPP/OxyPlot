@@ -64,7 +64,16 @@ namespace WindowsFormsDemo
 
             PlotVariables.pm.Axes.Add(PlotVariables.linearAxisY);
 
-           
+            PlotVariables.areaSeries1.DataFieldX2 = "Sample number";
+            PlotVariables.areaSeries1.DataFieldY2 = "3*Standard deviation-Current temperature";
+            PlotVariables.areaSeries1.Fill = OxyColors.LightBlue;
+            PlotVariables.areaSeries1.Color = OxyColors.Red;
+            PlotVariables.areaSeries1.StrokeThickness = 0;
+            PlotVariables.areaSeries1.DataFieldX = "Sample number";
+            PlotVariables.areaSeries1.DataFieldY = "3*Standard deviation+Current temperature";
+            PlotVariables.areaSeries1.Title = "± 3*Standard deviation area";
+            
+            PlotVariables.pm.Series.Add(PlotVariables.areaSeries1);
 
             this.lineSeries1 = new LineSeries();
             this.lineSeries1.Color = OxyColor.FromArgb(255, 78, 154, 6);
@@ -76,6 +85,7 @@ namespace WindowsFormsDemo
             this.lineSeries1.StrokeThickness = 2;
             this.lineSeries1.DataFieldX = "Date";
             this.lineSeries1.DataFieldY = "Value";
+            this.lineSeries1.Title = "Current temperature";
             PlotVariables.pm.Series.Add(this.lineSeries1);
             plot1.Model = PlotVariables.pm;
         
@@ -165,7 +175,15 @@ namespace WindowsFormsDemo
 
                 PlotVariables.linearAxisY.AbsoluteMaximum = listdTemperature.Max()+0.5;
                 PlotVariables.linearAxisY.AbsoluteMinimum = listdTemperature.Min()-0.5;
+
+                PlotVariables.areaSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound + (3 * listdTemperature.StandardDeviation())));
+                PlotVariables.areaSeries1.Points2.Add(new DataPoint(this.i, dTemperatureRound - (3 * listdTemperature.StandardDeviation())));
+
+                //PlotVariables.areaSeries1.Points.Add(new DataPoint(this.i, dTemperatureMean + (3 * listdTemperature.StandardDeviation())));
+                //PlotVariables.areaSeries1.Points2.Add(new DataPoint(this.i, dTemperatureMean - (3 * listdTemperature.StandardDeviation())));
+               
                 
+               
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
                 plot1.InvalidatePlot(false);
                 //plot1.RefreshPlot(true);
