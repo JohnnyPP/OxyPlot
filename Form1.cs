@@ -159,11 +159,12 @@ namespace WindowsFormsDemo
                     "Skewness: " + String.Format("{0:0.0000}", descrStat.Skewness) + "\r\n" +
                     "Sample number: " + Convert.ToString(i);
 
-                PlotVariables.linearAxisX.AbsoluteMaximum = this.i;
+                //PlotVariables.linearAxisX.AbsoluteMaximum = this.i;
                 PlotVariables.linearAxisX.AbsoluteMinimum = -0.1;
+                //PlotVariables.linearAxisX.AxisChanged += xAxisDateTime_AxisChanged;
 
-                //PlotVariables.linearAxisY.AbsoluteMaximum = listdTemperature.Max()+1;
-                //PlotVariables.linearAxisY.AbsoluteMinimum = listdTemperature.Min()-1;
+                PlotVariables.linearAxisY.AbsoluteMaximum = listdTemperature.Max()+0.5;
+                PlotVariables.linearAxisY.AbsoluteMinimum = listdTemperature.Min()-0.5;
                 
                 this.lineSeries1.Points.Add(new DataPoint(this.i, dTemperatureRound));
                 plot1.InvalidatePlot(false);
@@ -220,6 +221,13 @@ namespace WindowsFormsDemo
                     MessageBox.Show(ex.ToString());
                 }
             }
+        }
+
+        void xAxisDateTime_AxisChanged(object sender, AxisChangedEventArgs e)
+        {
+
+            //PlotVariables.linearAxisY.Zoom(listdTemperature.Min(), listdTemperature.Max());
+            //plot1.RefreshPlot(true);
         }
     }
 }
