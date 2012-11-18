@@ -23,8 +23,7 @@ namespace WindowsFormsDemo
     public partial class Form1 : Form
     {
 
-        private readonly LineSeries lineSeries1;
-        private readonly LineSeries lineSeries2Mean;
+        private readonly LineSeries lineSeries1, lineSeries2Mean, lineSeries3Median;
 
         private int i;
 
@@ -34,6 +33,7 @@ namespace WindowsFormsDemo
         {
             InitializeComponent();
             button2_Disconnect.Enabled = false;
+            checkBox2MedianChart.Checked = true;
             textBox1Delay.Text = "1000";                            //microcontroller default sampling interval 1000 ms
 
 
@@ -104,7 +104,20 @@ namespace WindowsFormsDemo
             this.lineSeries2Mean.DataFieldY = "Value";
             this.lineSeries2Mean.Title = "Mean temperature";
             PlotVariables.pm.Series.Add(this.lineSeries2Mean);
-            
+
+            //median
+            this.lineSeries3Median = new LineSeries();
+            this.lineSeries3Median.Color = OxyColor.FromArgb(255, 0, 0, 255);
+            this.lineSeries3Median.MarkerFill = OxyColor.FromArgb(255, 255, 255, 255);
+            this.lineSeries3Median.MarkerStroke = OxyColors.ForestGreen;
+            this.lineSeries3Median.MarkerStrokeThickness = 2;
+            this.lineSeries3Median.MarkerType = MarkerType.None;
+            this.lineSeries3Median.MarkerSize = 1;
+            this.lineSeries3Median.StrokeThickness = 1;
+            this.lineSeries3Median.DataFieldX = "Sample";
+            this.lineSeries3Median.DataFieldY = "Value";
+            this.lineSeries3Median.Title = "Median temperature";
+            PlotVariables.pm.Series.Add(this.lineSeries3Median);
 
             plot1.Model = PlotVariables.pm;
         
@@ -200,6 +213,15 @@ namespace WindowsFormsDemo
 
                 //PlotVariables.areaSeries1.Points.Add(new DataPoint(this.i, dTemperatureMean + (3 * listdTemperature.StandardDeviation())));
                 //PlotVariables.areaSeries1.Points2.Add(new DataPoint(this.i, dTemperatureMean - (3 * listdTemperature.StandardDeviation())));
+
+                if (checkBox2MedianChart.Checked)
+                {
+                    //this.lineSeries3Median.Title = "Median temperature";
+                    this.lineSeries3Median.Points.Add(new DataPoint(this.i, listdTemperature.Median()));
+                    plot1.RefreshPlot(true);
+                }
+
+
 
 
                 this.lineSeries2Mean.Points.Add(new DataPoint(this.i, dTemperatureMean));

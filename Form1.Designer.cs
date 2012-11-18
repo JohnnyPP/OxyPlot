@@ -46,6 +46,7 @@ namespace WindowsFormsDemo
             this.label1Temperature = new System.Windows.Forms.Label();
             this.textBox1Delay = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox2MedianChart = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,12 +135,23 @@ namespace WindowsFormsDemo
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Sampling interval [ms]";
             // 
+            // checkBox2MedianChart
+            // 
+            this.checkBox2MedianChart.AutoSize = true;
+            this.checkBox2MedianChart.Location = new System.Drawing.Point(12, 308);
+            this.checkBox2MedianChart.Name = "checkBox2MedianChart";
+            this.checkBox2MedianChart.Size = new System.Drawing.Size(88, 17);
+            this.checkBox2MedianChart.TabIndex = 8;
+            this.checkBox2MedianChart.Text = "Median chart";
+            this.checkBox2MedianChart.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1036, 486);
+            this.Controls.Add(this.checkBox2MedianChart);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1Temperature);
             this.Controls.Add(this.checkBox1Save);
@@ -168,5 +180,6 @@ namespace WindowsFormsDemo
         private System.Windows.Forms.Label label1Temperature;
         private System.Windows.Forms.TextBox textBox1Delay;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox checkBox2MedianChart;
     }
 }
